@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - TechStore</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🛍️ TechStore</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="carrinho.html" class="cart-link active">
+                    🛒 Carrinho <span class="badge" id="cartBadge">0</span>
+                </a></li>
+                <li><a href="admin.html" class="admin-link">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Seu Carrinho</h1>
+
+        <div id="emptyCart" class="empty-cart">
+            <p>Seu carrinho está vazio</p>
+            <a href="produtos.html" class="btn btn-primary">Continuar Comprando</a>
+        </div>
+
+        <div id="cartContent" class="cart-content" style="display: none;">
+            <div class="cart-items">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Total</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cart-summary">
+                <div class="summary-item">
+                    <label>Subtotal:</label>
+                    <span id="subtotal">R$ 0.00</span>
+                </div>
+                <div class="summary-item">
+                    <label>Frete:</label>
+                    <span id="shipping">R$ 0.00</span>
+                </div>
+                <div class="summary-item">
+                    <label>Desconto:</label>
+                    <span id="discount">R$ 0.00</span>
+                </div>
+                
+                <div class="coupon-section">
+                    <input type="text" id="couponInput" placeholder="Código de cupom">
+                    <button class="btn btn-secondary" id="applyCouponBtn">Aplicar Cupom</button>
+                </div>
+
+                <div class="summary-item total">
+                    <label>Total:</label>
+                    <span id="total">R$ 0.00</span>
+                </div>
+
+                <a href="checkout.html" class="btn btn-primary btn-block">Ir para Pagamento</a>
+                <a href="produtos.html" class="btn btn-secondary btn-block">Continuar Comprando</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-section">
+                <h4>Sobre</h4>
+                <p>TechStore é a melhor loja online de eletrônicos</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#">Termos de Serviço</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Devoluções</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>Email: contato@techstore.com</p>
+                <p>Telefone: (11) 99999-9999</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TechStore. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/pagamento.js"></script>
+</body>
+</html>

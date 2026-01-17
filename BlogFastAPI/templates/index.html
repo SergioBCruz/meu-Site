@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog FastAPI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📝 Blog FastAPI</h1>
+            <p>Um blog simples e poderoso desenvolvido com FastAPI</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#posts">Posts</a></li>
+                <li><a href="#novo-post">Novo Post</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div id="alerts-container"></div>
+
+            <div class="posts-section">
+                <!-- Posts -->
+                <div>
+                    <section id="posts">
+                        <h2 style="margin-bottom: 2rem; color: #2c3e50;">Posts do Blog</h2>
+                        <div id="posts-container" class="posts-list">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                <p>Carregando posts...</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Novo Post -->
+                    <div class="widget">
+                        <h3>✏️ Novo Post</h3>
+                        <form id="form-post" onsubmit="criarPost(event)">
+                            <div class="form-group">
+                                <label for="titulo">Título</label>
+                                <input type="text" id="titulo" placeholder="Título do post" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="autor">Autor</label>
+                                <input type="text" id="autor" placeholder="Seu nome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="conteudo">Conteúdo</label>
+                                <textarea id="conteudo" placeholder="Escreva seu post..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success" style="width: 100%;">Publicar Post</button>
+                        </form>
+                    </div>
+
+                    <!-- Informações -->
+                    <div class="widget">
+                        <h3>ℹ️ Sobre</h3>
+                        <p>Este é um blog desenvolvido com:</p>
+                        <ul style="margin-left: 1rem; margin-top: 1rem;">
+                            <li>FastAPI</li>
+                            <li>SQLite</li>
+                            <li>HTML5 & CSS3</li>
+                            <li>JavaScript Vanilla</li>
+                        </ul>
+                    </div>
+
+                    <!-- Estatísticas -->
+                    <div class="widget">
+                        <h3>📊 Estatísticas</h3>
+                        <p><strong>Total de Posts:</strong> <span id="total-posts">-</span></p>
+                        <p><strong>Última Atualização:</strong> <span id="ultima-atualizacao">-</span></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Blog FastAPI - Desenvolvido com ❤️</p>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

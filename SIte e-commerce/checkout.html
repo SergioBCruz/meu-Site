@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - TechStore</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🛍️ TechStore</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="carrinho.html" class="cart-link">
+                    🛒 Carrinho <span class="badge" id="cartBadge">0</span>
+                </a></li>
+                <li><a href="admin.html" class="admin-link">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Finalizar Compra</h1>
+
+        <div class="checkout-container">
+            <!-- Formulário de Dados -->
+            <div class="checkout-form">
+                <h2>Dados Pessoais</h2>
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <label for="fullName">Nome Completo</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+
+                    <h2>Endereço de Entrega</h2>
+
+                    <div class="form-group">
+                        <label for="cep">CEP</label>
+                        <input type="text" id="cep" placeholder="00000-000" required>
+                        <button type="button" class="btn btn-secondary" id="searchCepBtn">Buscar CEP</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Endereço</label>
+                        <input type="text" id="address" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="number">Número</label>
+                            <input type="text" id="number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="complement">Complemento</label>
+                            <input type="text" id="complement">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">Cidade</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">Estado</label>
+                            <input type="text" id="state" required>
+                        </div>
+                    </div>
+
+                    <h2>Forma de Entrega</h2>
+
+                    <div class="shipping-options">
+                        <label>
+                            <input type="radio" name="shipping" value="normal" checked>
+                            📦 Entrega Padrão (5-7 dias) - R$ 20.00
+                        </label>
+                        <label>
+                            <input type="radio" name="shipping" value="express">
+                            🚀 Entrega Expressa (2-3 dias) - R$ 50.00
+                        </label>
+                        <label>
+                            <input type="radio" name="shipping" value="same">
+                            ⚡ Entrega no Mesmo Dia - R$ 100.00
+                        </label>
+                    </div>
+
+                    <h2>Método de Pagamento</h2>
+
+                    <div class="payment-methods">
+                        <label>
+                            <input type="radio" name="paymentMethod" value="credit" checked>
+                            💳 Cartão de Crédito
+                        </label>
+                        <label>
+                            <input type="radio" name="paymentMethod" value="debit">
+                            🏦 Cartão de Débito
+                        </label>
+                        <label>
+                            <input type="radio" name="paymentMethod" value="pix">
+                            📱 PIX
+                        </label>
+                        <label>
+                            <input type="radio" name="paymentMethod" value="boleto">
+                            📄 Boleto
+                        </label>
+                    </div>
+
+                    <!-- Detalhes do Cartão -->
+                    <div id="cardPaymentSection" class="card-payment-section">
+                        <div class="form-group">
+                            <label for="cardName">Nome no Cartão</label>
+                            <input type="text" id="cardName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cardNumber">Número do Cartão</label>
+                            <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cardExpiry">Validade</label>
+                                <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardCVC">CVV</label>
+                                <input type="text" id="cardCVC" placeholder="000" maxlength="3" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="installments">Parcelamento</label>
+                            <select id="installments" required>
+                                <option value="1">1x sem juros</option>
+                                <option value="2">2x sem juros</option>
+                                <option value="3">3x sem juros</option>
+                                <option value="6">6x sem juros</option>
+                                <option value="12">12x com juros</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Seção PIX -->
+                    <div id="pixSection" style="display: none;">
+                        <p>🔐 Você receberá o código PIX após confirmar o pedido</p>
+                    </div>
+
+                    <!-- Seção Boleto -->
+                    <div id="boletoSection" style="display: none;">
+                        <p>📄 Você receberá o boleto por email após confirmar o pedido</p>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">Aceito os <a href="#">termos e condições</a></label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Confirmar Pedido</button>
+                </form>
+            </div>
+
+            <!-- Resumo do Pedido -->
+            <div class="order-summary">
+                <h2>Resumo do Pedido</h2>
+                <div class="summary-items" id="summaryItems"></div>
+                
+                <div class="summary-totals">
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="summarySubtotal">R$ 0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Frete:</span>
+                        <span id="summaryShipping">R$ 20.00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total:</span>
+                        <span id="summaryTotal">R$ 0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Sucesso -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-message">
+                <h2>✅ Pedido Realizado com Sucesso!</h2>
+                <p>Número do pedido: <strong id="orderNumber"></strong></p>
+                <p>Um email de confirmação foi enviado para <strong id="confirmEmail"></strong></p>
+                <p>Acompanhe seu pedido em: Meus Pedidos</p>
+                <a href="index.html" class="btn btn-primary">Voltar à Loja</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-section">
+                <h4>Sobre</h4>
+                <p>TechStore é a melhor loja online de eletrônicos</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#">Termos de Serviço</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Devoluções</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>Email: contato@techstore.com</p>
+                <p>Telefone: (11) 99999-9999</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TechStore. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/pagamento.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - TechStore</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🛍️ TechStore</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="produtos.html" class="active">Produtos</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="carrinho.html" class="cart-link">
+                    🛒 Carrinho <span class="badge" id="cartBadge">0</span>
+                </a></li>
+                <li><a href="admin.html" class="admin-link">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Filtros -->
+        <section class="filters-section">
+            <h2>Filtros</h2>
+            
+            <div class="filter-group">
+                <label for="searchInput">Pesquisar:</label>
+                <input type="text" id="searchInput" placeholder="Digite o nome do produto...">
+            </div>
+
+            <div class="filter-group">
+                <label for="categoryFilter">Categoria:</label>
+                <select id="categoryFilter">
+                    <option value="">Todas</option>
+                    <option value="smartphones">Smartphones</option>
+                    <option value="notebooks">Notebooks</option>
+                    <option value="fones">Fones de Ouvido</option>
+                    <option value="acessorios">Acessórios</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="priceFilter">Faixa de Preço:</label>
+                <select id="priceFilter">
+                    <option value="">Todos</option>
+                    <option value="0-500">R$ 0 - R$ 500</option>
+                    <option value="500-1000">R$ 500 - R$ 1.000</option>
+                    <option value="1000-3000">R$ 1.000 - R$ 3.000</option>
+                    <option value="3000">Acima de R$ 3.000</option>
+                </select>
+            </div>
+
+            <button class="btn btn-secondary" id="clearFilters">Limpar Filtros</button>
+        </section>
+
+        <!-- Produtos -->
+        <section class="products-section">
+            <h2>Nossos Produtos</h2>
+            <div class="products-grid" id="productsGrid"></div>
+        </section>
+    </div>
+
+    <!-- Modal do Produto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <img id="modalProductImage" src="" alt="" class="modal-image">
+                <div class="modal-info">
+                    <h2 id="modalProductName"></h2>
+                    <p class="product-description" id="modalProductDescription"></p>
+                    <div class="product-rating">
+                        <span id="modalProductRating"></span> ⭐
+                    </div>
+                    <p class="product-price">R$ <span id="modalProductPrice"></span></p>
+                    <div class="quantity-selector">
+                        <button id="decreaseQty">−</button>
+                        <input type="number" id="quantityInput" value="1" min="1">
+                        <button id="increaseQty">+</button>
+                    </div>
+                    <button class="btn btn-primary" id="addToCartBtn">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-section">
+                <h4>Sobre</h4>
+                <p>TechStore é a melhor loja online de eletrônicos</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#">Termos de Serviço</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Devoluções</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>Email: contato@techstore.com</p>
+                <p>Telefone: (11) 99999-9999</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TechStore. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/pagamento.js"></script>
+</body>
+</html>

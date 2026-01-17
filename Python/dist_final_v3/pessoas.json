@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "sergio",
+    "idade": 33,
+    "cep": "93180000",
+    "cidade": "Portão",
+    "estado": "RS",
+    "pais": "Brasil",
+    "genero": "Masculino",
+    "estado_civil": "Casado(a)"
+  },
+  {
+    "nome": "Alecsandra petry eismann",
+    "idade": 33,
+    "cep": "93180000",
+    "cidade": "Portão",
+    "estado": "RS",
+    "pais": "Brasil",
+    "genero": "Masculino",
+    "estado_civil": "Casado(a)"
+  },
+  {
+    "nome": "Nadia Elsi Petry Eismann",
+    "idade": 61,
+    "cep": "93180000",
+    "cidade": "Portão",
+    "estado": "RS",
+    "pais": "Brasil",
+    "genero": "Feminino",
+    "estado_civil": "Casado(a)"
+  }
+]

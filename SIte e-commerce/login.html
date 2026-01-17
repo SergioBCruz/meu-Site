@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - TechStore</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            padding: 2rem;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            color: #007bff;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+            animation: shake 0.5s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-credentials {
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            color: #004085;
+        }
+
+        .demo-credentials h4 {
+            margin-bottom: 0.5rem;
+            color: #002752;
+        }
+
+        .demo-credentials p {
+            margin: 0.25rem 0;
+        }
+
+        .demo-credentials code {
+            background-color: #fff;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🛍️ TechStore</h1>
+            <p>Painel Administrativo</p>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message">✅ Login realizado com sucesso! Redirecionando...</div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">👤 Usuário</label>
+                <input type="text" id="username" name="username" required placeholder="admin">
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔐 Senha</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">Entrar</button>
+        </form>
+
+        <div class="forgot-password">
+            <a href="#" onclick="showDemoCredentials(); return false;">Credenciais de teste</a>
+        </div>
+
+        <div class="demo-credentials">
+            <h4>📌 Credenciais Padrão:</h4>
+            <p><strong>Usuário:</strong> <code>admin</code></p>
+            <p><strong>Senha:</strong> <code>admin123</code></p>
+            <p style="margin-top: 0.5rem; font-style: italic;">Você pode alterar no painel admin</p>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // CREDENCIAIS PADRÃO
+        // ========================================
+        const defaultCredentials = {
+            username: 'admin',
+            password: 'admin123'
+        };
+
+        // Carregar credenciais do localStorage
+        function getStoredCredentials() {
+            const stored = localStorage.getItem('adminCredentials');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            return defaultCredentials;
+        }
+
+        // ========================================
+        // VALIDAÇÃO DE LOGIN
+        // ========================================
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const credentials = getStoredCredentials();
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            const loginBtn = document.getElementById('loginBtn');
+
+            // Limpar mensagens
+            errorDiv.classList.remove('show');
+            successDiv.classList.remove('show');
+
+            // Validar credenciais
+            if (username === credentials.username && password === credentials.password) {
+                // Login bem-sucedido
+                successDiv.classList.add('show');
+                loginBtn.classList.add('loading');
+                loginBtn.disabled = true;
+
+                // Armazenar sessão
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('adminUsername', username);
+
+                // Redirecionar após 1.5s
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1500);
+            } else {
+                // Login falhou
+                errorDiv.textContent = '❌ Usuário ou senha incorretos!';
+                errorDiv.classList.add('show');
+
+                // Limpar campos
+                document.getElementById('password').value = '';
+                document.getElementById('username').focus();
+
+                // Shake animation
+                document.querySelector('.login-container').style.animation = 'none';
+                setTimeout(() => {
+                    document.querySelector('.login-container').style.animation = 'slideIn 0.5s ease';
+                }, 10);
+            }
+        });
+
+        // ========================================
+        // VERIFICAR CREDENCIAIS DE TESTE
+        // ========================================
+        function showDemoCredentials() {
+            alert('Credenciais de Teste:\n\nUsuário: admin\nSenha: admin123\n\nVocê pode alterar estas credenciais no painel admin.');
+        }
+
+        // ========================================
+        // PRÉ-PREENCHER CREDENCIAIS (DEV ONLY)
+        // ========================================
+        // Descomente para desenvolvimento rápido
+        // document.getElementById('username').value = 'admin';
+        // document.getElementById('password').value = 'admin123';
+
+        // ========================================
+        // VERIFICAR SE JÁ ESTÁ LOGADO
+        // ========================================
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                window.location.href = 'admin.html';
+            }
+        });
+    </script>
+</body>
+</html>

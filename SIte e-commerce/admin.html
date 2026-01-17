@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - TechStore</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        .change-password-btn {
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-left: 0.5rem;
+        }
+
+        .change-password-btn:hover {
+            background-color: #138496;
+        }
+
+        .modal-password {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-password.show {
+            display: flex;
+        }
+
+        .modal-password-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-password-content h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .modal-password-content .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal-password-content label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-password-content input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .modal-password-content input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        .modal-password-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-password-buttons button {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .modal-password-buttons .save-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .modal-password-buttons .save-btn:hover {
+            background-color: #218838;
+        }
+
+        .modal-password-buttons .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .modal-password-buttons .cancel-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal de Troca de Senha -->
+    <div id="passwordModal" class="modal-password">
+        <div class="modal-password-content">
+            <h2>Alterar Senha</h2>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Senha Atual</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Nova Senha</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Senha</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <div class="modal-password-buttons">
+                    <button type="submit" class="save-btn">Salvar</button>
+                    <button type="button" class="cancel-btn" onclick="closePasswordModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🛍️ TechStore</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="carrinho.html" class="cart-link">
+                    🛒 Carrinho <span class="badge" id="cartBadge">0</span>
+                </a></li>
+                <li><a href="admin.html" class="admin-link active">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Admin com Usuário -->
+    <div    <h2>Painel Administrativo</h2>
+            <p id="userGreeting" style="color: #666; margin: 0;"></p>
+        </div>
+        <div class="user-info">
+            <button class="change-password-btn" id="changePasswordBtn">🔑 Alterar Senha</button>
+            <button class="logout-btn" id="logoutBtn">🚪 Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Painel Administrativo</h1>
+
+        <!-- Abas do Admin -->
+        <div class="admin-tabs">
+            <button class="tab-button active" data-tab="dashboard">📊 Dashboard</button>
+            <button class="tab-button" data-tab="products">📦 Produtos</button>
+            <button class="tab-button" data-tab="pedidos">📋 Pedidos</button>
+            <button class="tab-button" data-tab="configuracoes">⚙️ Configurações</button>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="admin-section active">
+            <h2>Dashboard</h2>
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Vendas Totais</h3>
+                    <p class="stat-value" id="totalSales">R$ 0.00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total de Pedidos</h3>
+                    <p class="stat-value" id="totalOrders">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Produtos</h3>
+                    <p class="stat-value" id="totalProducts">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Clientes</h3>
+                    <p class="stat-value" id="totalCustomers">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gerenciar Produtos -->
+        <div id="products" class="admin-section">
+            <h2>Gerenciar Produtos</h2>
+
+            <!-- Formulário de Produto -->
+            <div class="product-form-section">
+                <h3>Adicionar/Editar Produto</h3>
+                <form id="productForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productName">Nome do Produto</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Preço</label>
+                            <input type="number" id="productPrice" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productCategory">Categoria</label>
+                            <select id="productCategory" required>
+                                <option value="smartphones">Smartphones</option>
+                                <option value="notebooks">Notebooks</option>
+                                <option value="fones">Fones de Ouvido</option>
+                                <option value="acessorios">Acessórios</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock">Estoque</label>
+                            <input type="number" id="productStock" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescription">Descrição</label>
+                        <textarea id="productDescription" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productImage">URL da Imagem</label>
+                            <input type="text" id="productImage" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productRating">Avaliação</label>
+                            <input type="number" id="productRating" min="1" max="5" step="0.1" value="5">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                    <button type="button" class="btn btn-secondary" id="clearFormBtn">Limpar</button>
+                </form>
+            </div>
+
+            <!-- Lista de Produtos -->
+            <div class="products-list-section">
+                <h3>Lista de Produtos</h3>
+                <div class="products-table-container">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gerenciar Pedidos -->
+        <div id="pedidos" class="admin-section">
+            <h2>Gerenciar Pedidos</h2>
+            <div class="orders-table-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>ID do Pedido</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Configurações -->
+        <div id="configuracoes" class="admin-section">
+            <h2>Configurações da Loja</h2>
+
+            <div class="settings-form">
+                <div class="form-group">
+                    <label for="storeName">Nome da Loja</label>
+                    <input type="text" id="storeName" value="TechStore">
+                </div>
+
+                <div class="form-group">
+                    <label for="storeEmail">Email da Loja</label>
+                    <input type="email" id="storeEmail" value="contato@techstore.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="storePhone">Telefone</label>
+                    <input type="tel" id="storePhone" value="(11) 99999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label for="storeLogo">URL do Logo</label>
+                    <input type="text" id="storeLogo">
+                </div>
+
+                <h3>Configurações de Frete</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="shippingNormal">Frete Normal</label>
+                        <input type="number" id="shippingNormal" value="20" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="shippingExpress">Frete Express</label>
+                        <input type="number" id="shippingExpress" value="50" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="shippingSame">Frete Mesmo Dia</label>
+                        <input type="number" id="shippingSame" value="100" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="freeShippingAmount">Frete Grátis Acima de</label>
+                    <input type="number" id="freeShippingAmount" value="100" step="0.01">
+                </div>
+
+                <h3>Cupons de Desconto</h3>
+
+                <div class="coupon-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="couponCode">Código</label>
+                            <input type="text" id="couponCode" placeholder="Ex: PROMO10">
+                        </div>
+                        <div class="form-group">
+                            <label for="couponDiscount">Desconto (%)</label>
+                            <input type="number" id="couponDiscount" min="0" max="100" value="10">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="addCouponBtn">Adicionar Cupom</button>
+                </div>
+
+                <div id="couponsList" class="coupons-list"></div>
+
+                <button class="btn btn-primary" id="saveSettingsBtn">Salvar Configurações</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-section">
+                <h4>Sobre</h4>
+                <p>TechStore é a melhor loja online de eletrônicos</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#">Termos de Serviço</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Devoluções</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>Email: contato@techstore.com</p>
+                <p>Telefone: (11) 99999-9999</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TechStore. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

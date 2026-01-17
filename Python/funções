@@ -1,0 +1,22 @@
+# Função 1: Recebe um nome e imprime uma saudação
+def saudacao(nome):
+    print(f'Olá, {nome}! Bem-vindo!')
+
+# Função 2: Recebe dois números e retorna a multiplicação
+def multiplicacao(num1, num2):
+    return num1 * num2
+
+# Função 3: Diz se um número é par ou impar
+def par_ou_impar(numero):
+    if numero % 2 == 0:
+        print(f'{numero} é PAR')
+    else:
+        print(f'{numero} é IMPAR')
+
+# Testando as funções
+print('\n--- Testando as funções ---')
+saudacao('Sergi')
+resultado = multiplicacao(5, 3)
+print(f'5 × 3 = {resultado}')
+par_ou_impar(10)
+par_ou_impar(7)
