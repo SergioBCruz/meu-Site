@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Fotos - Viajando com os Paixão</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">✈️</span>
+                <h1>Viajando com os Paixão</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/galeria" class="nav-link active">Galeria</a>
+                <a href="/videos" class="nav-link">Vídeos</a>
+                <a href="/sobre" class="nav-link">Sobre</a>
+                <a href="/admin" class="nav-link admin-link" id="linkAdmin" style="display:none;">Admin</a>
+                <div class="auth-buttons">
+                    <button class="btn-login" onclick="mostrarLogin()" id="btnLogin">Login</button>
+                    <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharLogin()">&times;</span>
+            <h2>Login</h2>
+            <div class="tabs">
+                <button class="tab-button active" onclick="abrirTab('login')">Login</button>
+                <button class="tab-button" onclick="abrirTab('registro')">Registrar</button>
+            </div>
+            <div id="login" class="tab-content active">
+                <input type="email" id="emailLogin" placeholder="Email" class="input-field">
+                <input type="password" id="senhaLogin" placeholder="Senha" class="input-field">
+                <button onclick="realizarLogin()" class="btn-primary">Entrar</button>
+                <p id="msgLogin" class="message"></p>
+            </div>
+            <div id="registro" class="tab-content">
+                <input type="text" id="nomeRegistro" placeholder="Nome Completo" class="input-field">
+                <input type="email" id="emailRegistro" placeholder="Email" class="input-field">
+                <input type="password" id="senhaRegistro" placeholder="Senha" class="input-field">
+                <input type="password" id="senhaConfirm" placeholder="Confirmar Senha" class="input-field">
+                <button onclick="realizarRegistro()" class="btn-primary">Criar Conta</button>
+                <p id="msgRegistro" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Galeria -->
+    <section class="galeria-section container">
+        <h1 class="section-title">📷 Galeria de Fotos</h1>
+        
+        <div class="filtros">
+            <input type="text" id="filtroLocal" placeholder="Filtrar por localização..." class="input-field">
+            <select id="filtroPais" class="input-field">
+                <option value="">Todos os países</option>
+            </select>
+        </div>
+
+        <div class="galeria-grid" id="galeriaContainer">
+            <!-- Fotos carregadas via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Modal de Visualização -->
+    <div class="modal" id="fotoModal">
+        <div class="modal-fotoContent">
+            <span class="close" onclick="fecharFoto()">&times;</span>
+            <img id="fotoGrande" src="" alt="">
+            <div class="foto-info">
+                <h3 id="fotoTitulo"></h3>
+                <p id="fotoDescricao"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Viajando com os Paixão. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script>
+        async function carregarGaleria() {
+            try {
+                const response = await fetch('/api/posts');
+                const data = await response.json();
+                
+                const container = document.getElementById('galeriaContainer');
+                container.innerHTML = '';
+                
+                let paisSet = new Set();
+                
+                data.posts.forEach(post => {
+                    post.fotos.forEach(foto => {
+                        const fotoEl = document.createElement('div');
+                        fotoEl.className = 'galeria-item';
+                        fotoEl.innerHTML = `
+                            <img src="/uploads/${foto}" alt="${post.titulo}" onclick="abrirFoto('/uploads/${foto}', '${post.titulo}', '${post.descricao}')">
+                            <div class="galeria-overlay">
+                                <p>${post.localizacao || post.pais}</p>
+                            </div>
+                        `;
+                        container.appendChild(fotoEl);
+                    });
+                    
+                    if (post.pais) paisSet.add(post.pais);
+                });
+                
+                // Preencher filtro de país
+                const filtroPais = document.getElementById('filtroPais');
+                paisSet.forEach(pais => {
+                    const option = document.createElement('option');
+                    option.value = pais;
+                    option.textContent = pais;
+                    filtroPais.appendChild(option);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar galeria:', error);
+            }
+        }
+
+        function abrirFoto(src, titulo, descricao) {
+            document.getElementById('fotoGrande').src = src;
+            document.getElementById('fotoTitulo').textContent = titulo;
+            document.getElementById('fotoDescricao').textContent = descricao;
+            document.getElementById('fotoModal').style.display = 'block';
+        }
+
+        function fecharFoto() {
+            document.getElementById('fotoModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarAutenticacao();
+            carregarGaleria();
+        });
+    </script>
+</body>
+</html>

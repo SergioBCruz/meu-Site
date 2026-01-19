@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeos - Viajando com os Paixão</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">✈️</span>
+                <h1>Viajando com os Paixão</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/galeria" class="nav-link">Galeria</a>
+                <a href="/videos" class="nav-link active">Vídeos</a>
+                <a href="/sobre" class="nav-link">Sobre</a>
+                <a href="/admin" class="nav-link admin-link" id="linkAdmin" style="display:none;">Admin</a>
+                <div class="auth-buttons">
+                    <button class="btn-login" onclick="mostrarLogin()" id="btnLogin">Login</button>
+                    <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharLogin()">&times;</span>
+            <h2>Login</h2>
+            <div class="tabs">
+                <button class="tab-button active" onclick="abrirTab('login')">Login</button>
+                <button class="tab-button" onclick="abrirTab('registro')">Registrar</button>
+            </div>
+            <div id="login" class="tab-content active">
+                <input type="email" id="emailLogin" placeholder="Email" class="input-field">
+                <input type="password" id="senhaLogin" placeholder="Senha" class="input-field">
+                <button onclick="realizarLogin()" class="btn-primary">Entrar</button>
+                <p id="msgLogin" class="message"></p>
+            </div>
+            <div id="registro" class="tab-content">
+                <input type="text" id="nomeRegistro" placeholder="Nome Completo" class="input-field">
+                <input type="email" id="emailRegistro" placeholder="Email" class="input-field">
+                <input type="password" id="senhaRegistro" placeholder="Senha" class="input-field">
+                <input type="password" id="senhaConfirm" placeholder="Confirmar Senha" class="input-field">
+                <button onclick="realizarRegistro()" class="btn-primary">Criar Conta</button>
+                <p id="msgRegistro" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vídeos -->
+    <section class="videos-section container">
+        <h1 class="section-title">📹 Nossos Vídeos</h1>
+        
+        <div class="videos-grid" id="videosContainer">
+            <!-- Vídeos carregados via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Viajando com os Paixão. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script>
+        async function carregarVideos() {
+            try {
+                const response = await fetch('/api/posts');
+                const data = await response.json();
+                
+                const container = document.getElementById('videosContainer');
+                container.innerHTML = '';
+                
+                data.posts.forEach(post => {
+                    post.videos.forEach(video => {
+                        const videoEl = document.createElement('div');
+                        videoEl.className = 'video-card';
+                        
+                        const ext = video.split('.').pop().toLowerCase();
+                        const tipos = {
+                            'mp4': 'video/mp4',
+                            'webm': 'video/webm',
+                            'mov': 'video/quicktime',
+                            'avi': 'video/x-msvideo'
+                        };
+                        
+                        videoEl.innerHTML = `
+                            <video width="100%" height="300" controls style="border-radius: 8px;">
+                                <source src="/uploads/${video}" type="${tipos[ext] || 'video/mp4'}">
+                                Seu navegador não suporta vídeo HTML5.
+                            </video>
+                            <div class="video-info">
+                                <h3>${post.titulo}</h3>
+                                <p>${post.localizacao || post.pais}</p>
+                            </div>
+                        `;
+                        
+                        container.appendChild(videoEl);
+                    });
+                });
+                
+                if (container.children.length === 0) {
+                    container.innerHTML = '<p class="empty-message">Nenhum vídeo publicado ainda.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Erro ao carregar vídeos:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarAutenticacao();
+            carregarVideos();
+        });
+    </script>
+</body>
+</html>

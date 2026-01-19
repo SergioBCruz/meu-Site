@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.venv
+venv
+.git
+.gitignore
+.env
+*.log
+.DS_Store
+node_modules
+.firebase
+.firebaserc
+firebase.json

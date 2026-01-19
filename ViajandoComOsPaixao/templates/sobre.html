@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - Viajando com os Paixão</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">✈️</span>
+                <h1>Viajando com os Paixão</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/galeria" class="nav-link">Galeria</a>
+                <a href="/videos" class="nav-link">Vídeos</a>
+                <a href="/sobre" class="nav-link active">Sobre</a>
+                <a href="/admin" class="nav-link admin-link" id="linkAdmin" style="display:none;">Admin</a>
+                <div class="auth-buttons">
+                    <button class="btn-login" onclick="mostrarLogin()" id="btnLogin">Login</button>
+                    <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharLogin()">&times;</span>
+            <h2>Login</h2>
+            <div class="tabs">
+                <button class="tab-button active" onclick="abrirTab('login')">Login</button>
+                <button class="tab-button" onclick="abrirTab('registro')">Registrar</button>
+            </div>
+            <div id="login" class="tab-content active">
+                <input type="email" id="emailLogin" placeholder="Email" class="input-field">
+                <input type="password" id="senhaLogin" placeholder="Senha" class="input-field">
+                <button onclick="realizarLogin()" class="btn-primary">Entrar</button>
+                <p id="msgLogin" class="message"></p>
+            </div>
+            <div id="registro" class="tab-content">
+                <input type="text" id="nomeRegistro" placeholder="Nome Completo" class="input-field">
+                <input type="email" id="emailRegistro" placeholder="Email" class="input-field">
+                <input type="password" id="senhaRegistro" placeholder="Senha" class="input-field">
+                <input type="password" id="senhaConfirm" placeholder="Confirmar Senha" class="input-field">
+                <button onclick="realizarRegistro()" class="btn-primary">Criar Conta</button>
+                <p id="msgRegistro" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sobre -->
+    <section class="sobre-section container">
+        <h1 class="section-title">Sobre Nós</h1>
+        
+        <div class="sobre-content">
+            <div class="sobre-text">
+                <h2>Bem-vindo ao Nosso Mundo de Viagens!</h2>
+                <p>
+                    Somos uma família apaixonada por explorar o mundo e compartilhar nossas experiências com todos 
+                    vocês. Este site é nosso diário de viagens, onde documentamos cada momento especial das nossas 
+                    aventuras ao redor do globo.
+                </p>
+                
+                <h3>Nossa História</h3>
+                <p>
+                    O projeto "Viajando com os Paixão" começou como uma forma de manter conectados com nossos 
+                    familiares e amigos enquanto explorávamos novos destinos. Com o tempo, cresceu e se tornou 
+                    uma comunidade de viajantes que compartilham a mesma paixão por descobrir novas culturas, 
+                    paisagens e experiências inesquecíveis.
+                </p>
+                
+                <h3>Nossos Valores</h3>
+                <ul class="valores-list">
+                    <li>🌍 <strong>Exploração Responsável:</strong> Respeitamos as culturas locais e o meio ambiente</li>
+                    <li>📸 <strong>Documentação Autêntica:</strong> Compartilhamos momentos genuínos e inspiradores</li>
+                    <li>❤️ <strong>Conexão Humana:</strong> Valorizamos as pessoas e os relacionamentos que fazemos</li>
+                    <li>🎯 <strong>Qualidade:</strong> Oferecemos conteúdo cuidado e bem produzido</li>
+                </ul>
+            </div>
+            
+            <div class="sobre-stats">
+                <div class="stat-card">
+                    <h3 id="estatPaises">0</h3>
+                    <p>Países Visitados</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="estatFotos">0</h3>
+                    <p>Fotos Compartilhadas</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="estatVideos">0</h3>
+                    <p>Vídeos Publicados</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="estatViagens">0</h3>
+                    <p>Viagens Documentadas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contato-section">
+            <h2>Entre em Contato</h2>
+            <p>Tem sugestões ou quer nos mandar um recado? Preencha o formulário abaixo:</p>
+            
+            <form class="formulario-contato" onsubmit="enviarMensagem(event)">
+                <input type="text" placeholder="Seu Nome" required class="input-field">
+                <input type="email" placeholder="Seu Email" required class="input-field">
+                <textarea placeholder="Sua Mensagem" rows="5" required class="input-field"></textarea>
+                <button type="submit" class="btn-primary">Enviar Mensagem</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Viajando com os Paixão. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script>
+        async function atualizarEstatisticas() {
+            try {
+                const response = await fetch('/api/posts');
+                const data = await response.json();
+                
+                let paises = new Set();
+                let totalFotos = 0;
+                let totalVideos = 0;
+                
+                data.posts.forEach(post => {
+                    if (post.pais) paises.add(post.pais);
+                    totalFotos += post.fotos.length;
+                    totalVideos += post.videos.length;
+                });
+                
+                document.getElementById('estatPaises').textContent = paises.size;
+                document.getElementById('estatFotos').textContent = totalFotos;
+                document.getElementById('estatVideos').textContent = totalVideos;
+                document.getElementById('estatViagens').textContent = data.total;
+                
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        function enviarMensagem(event) {
+            event.preventDefault();
+            alert('Obrigado pela mensagem! Entraremos em contato em breve.');
+            event.target.reset();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarAutenticacao();
+            atualizarEstatisticas();
+        });
+    </script>
+</body>
+</html>

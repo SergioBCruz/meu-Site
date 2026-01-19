@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Viajando com os Paixão</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">✈️</span>
+                <h1>Viajando com os Paixão</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/galeria" class="nav-link">Galeria</a>
+                <a href="/videos" class="nav-link">Vídeos</a>
+                <a href="/sobre" class="nav-link">Sobre</a>
+                <a href="/admin" class="nav-link active">Admin</a>
+                <div class="auth-buttons">
+                    <button class="btn-logout" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Section -->
+    <section class="admin-section container">
+        <div class="admin-header">
+            <h1>Painel Administrativo</h1>
+            <p>Gerencie seus posts, fotos e vídeos</p>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="tab-button active" onclick="abrirAbaMod('criar')">Criar Novo Post</button>
+            <button class="tab-button" onclick="abrirAbaMod('listar')">Meus Posts</button>
+            <button class="tab-button" onclick="abrirAbaMod('editar')">Editar Posts</button>
+        </div>
+
+        <!-- Criar Post -->
+        <div id="criar" class="admin-content active">
+            <h2>Criar Novo Post</h2>
+            <form class="formulario-admin" onsubmit="criarPost(event)">
+                <div class="form-group">
+                    <label>Título da Viagem</label>
+                    <input type="text" id="tituloPost" placeholder="ex: Férias em Paris" required class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="descricaoPost" placeholder="Conte sobre sua experiência..." rows="5" required class="input-field"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Local / País</label>
+                    <input type="text" id="paisPost" placeholder="ex: França, Paris" required class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Data da Viagem</label>
+                    <input type="date" id="dataPost" required class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Fotos (múltiplas)</label>
+                    <input type="file" id="fotosInput" multiple accept="image/*" class="input-field">
+                    <small>Máximo 10MB por arquivo. Formatos: JPG, PNG, WebP</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Vídeos (múltiplos)</label>
+                    <input type="file" id="videosInput" multiple accept="video/*" class="input-field">
+                    <small>Máximo 100MB por arquivo. Formatos: MP4, WebM</small>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="destaquePost">
+                        Destacar este post na página inicial
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary">Publicar Post</button>
+                <p id="msgCriar" class="message"></p>
+            </form>
+        </div>
+
+        <!-- Listar Posts -->
+        <div id="listar" class="admin-content">
+            <h2>Meus Posts</h2>
+            <div id="listaPosts" class="posts-list">
+                <p>Carregando posts...</p>
+            </div>
+        </div>
+
+        <!-- Editar Posts -->
+        <div id="editar" class="admin-content">
+            <h2>Editar Posts</h2>
+            <div id="editarPosts" class="posts-list">
+                <p>Selecione um post para editar...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Edição -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalEdicao()">&times;</span>
+            <h2>Editar Post</h2>
+            <form class="formulario-admin" onsubmit="salvarEdicao(event)">
+                <input type="hidden" id="editPostId">
+                
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="editTitulo" required class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="editDescricao" rows="5" required class="input-field"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Local / País</label>
+                    <input type="text" id="editPais" required class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="date" id="editData" required class="input-field">
+                </div>
+
+                <button type="submit" class="btn-primary">Salvar Alterações</button>
+                <button type="button" class="btn-danger" onclick="deletarPost()">Deletar Post</button>
+                <p id="msgEdicao" class="message"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Viajando com os Paixão. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script>
+        function abrirAbaMod(abaNome) {
+            document.querySelectorAll('.admin-content').forEach(aba => aba.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(abaNome).classList.add('active');
+            event.target.classList.add('active');
+
+            if (abaNome === 'listar') {
+                carregarMeusPosts();
+            } else if (abaNome === 'editar') {
+                carregarPostsParaEditar();
+            }
+        }
+
+        async function criarPost(event) {
+            event.preventDefault();
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                mostrarLogin();
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('titulo', document.getElementById('tituloPost').value);
+            formData.append('descricao', document.getElementById('descricaoPost').value);
+            formData.append('pais', document.getElementById('paisPost').value);
+            formData.append('data', document.getElementById('dataPost').value);
+            formData.append('destaque', document.getElementById('destaquePost').checked);
+
+            // Adicionar fotos
+            const fotosInput = document.getElementById('fotosInput');
+            for (let i = 0; i < fotosInput.files.length; i++) {
+                formData.append('fotos', fotosInput.files[i]);
+            }
+
+            // Adicionar vídeos
+            const videosInput = document.getElementById('videosInput');
+            for (let i = 0; i < videosInput.files.length; i++) {
+                formData.append('videos', videosInput.files[i]);
+            }
+
+            try {
+                const response = await fetch('/api/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('msgCriar').className = 'message success';
+                    document.getElementById('msgCriar').textContent = '✓ Post publicado com sucesso!';
+                    event.target.reset();
+                    setTimeout(() => {
+                        document.getElementById('msgCriar').textContent = '';
+                    }, 3000);
+                } else {
+                    document.getElementById('msgCriar').className = 'message error';
+                    document.getElementById('msgCriar').textContent = '✗ Erro: ' + (data.detail || 'Erro desconhecido');
+                }
+            } catch (error) {
+                console.error('Erro ao criar post:', error);
+                document.getElementById('msgCriar').className = 'message error';
+                document.getElementById('msgCriar').textContent = '✗ Erro na conexão';
+            }
+        }
+
+        async function carregarMeusPosts() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('/api/meus-posts', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                let html = '';
+                if (data.posts && data.posts.length > 0) {
+                    data.posts.forEach(post => {
+                        html += `
+                            <div class="post-card-admin">
+                                <div class="post-card-header">
+                                    <h3>${post.titulo}</h3>
+                                    <span class="post-data">${new Date(post.data).toLocaleDateString('pt-BR')}</span>
+                                </div>
+                                <p class="post-pais">${post.pais}</p>
+                                <p class="post-descricao">${post.descricao.substring(0, 100)}...</p>
+                                <div class="post-stats">
+                                    <span>📷 ${post.fotos.length} fotos</span>
+                                    <span>🎬 ${post.videos.length} vídeos</span>
+                                    <span>❤️ ${post.likes} likes</span>
+                                    <span>💬 ${post.comentarios.length} comentários</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html = '<p>Você ainda não tem posts. Crie um novo!</p>';
+                }
+
+                document.getElementById('listaPosts').innerHTML = html;
+            } catch (error) {
+                console.error('Erro ao carregar posts:', error);
+                document.getElementById('listaPosts').innerHTML = '<p>Erro ao carregar posts</p>';
+            }
+        }
+
+        async function carregarPostsParaEditar() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('/api/meus-posts', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                let html = '';
+                if (data.posts && data.posts.length > 0) {
+                    data.posts.forEach((post, index) => {
+                        html += `
+                            <div class="post-card-admin">
+                                <h3>${post.titulo}</h3>
+                                <p>${post.pais} - ${new Date(post.data).toLocaleDateString('pt-BR')}</p>
+                                <button onclick="abrirModalEdicao(${index})" class="btn-secondary">
+                                    Editar
+                                </button>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html = '<p>Nenhum post para editar</p>';
+                }
+
+                document.getElementById('editarPosts').innerHTML = html;
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        function abrirModalEdicao(index) {
+            const token = localStorage.getItem('token');
+            fetch('/api/meus-posts', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(r => r.json())
+            .then(data => {
+                const post = data.posts[index];
+                document.getElementById('editPostId').value = index;
+                document.getElementById('editTitulo').value = post.titulo;
+                document.getElementById('editDescricao').value = post.descricao;
+                document.getElementById('editPais').value = post.pais;
+                document.getElementById('editData').value = post.data.split('T')[0];
+                document.getElementById('editModal').style.display = 'block';
+            });
+        }
+
+        function fecharModalEdicao() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        async function salvarEdicao(event) {
+            event.preventDefault();
+            const token = localStorage.getItem('token');
+            const postId = document.getElementById('editPostId').value;
+
+            const data = {
+                titulo: document.getElementById('editTitulo').value,
+                descricao: document.getElementById('editDescricao').value,
+                pais: document.getElementById('editPais').value,
+                data: document.getElementById('editData').value
+            };
+
+            try {
+                const response = await fetch(`/api/posts/${postId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    document.getElementById('msgEdicao').className = 'message success';
+                    document.getElementById('msgEdicao').textContent = '✓ Post atualizado!';
+                    setTimeout(() => fecharModalEdicao(), 2000);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        async function deletarPost() {
+            if (!confirm('Tem certeza que deseja deletar este post?')) return;
+
+            const token = localStorage.getItem('token');
+            const postId = document.getElementById('editPostId').value;
+
+            try {
+                const response = await fetch(`/api/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    fecharModalEdicao();
+                    carregarPostsParaEditar();
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        // Verificar autenticação
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Você precisa estar logado para acessar o painel administrativo.');
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>

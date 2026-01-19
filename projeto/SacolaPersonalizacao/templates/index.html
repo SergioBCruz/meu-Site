@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalização de Sacolas - Lografic</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <h1>🛍️ Personalização de Sacolas</h1>
+                <p class="tagline">Web-to-Print - Customize sua embalagem</p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div class="step-indicators">
+                <div class="step-indicator active" id="step1-indicator">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Identificação</span>
+                </div>
+                <div class="step-indicator" id="step2-indicator">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Logo</span>
+                </div>
+                <div class="step-indicator" id="step3-indicator">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Contato</span>
+                </div>
+                <div class="step-indicator" id="step4-indicator">
+                    <span class="step-number">4</span>
+                    <span class="step-label">Personalização</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- PASSO 1: Identificação -->
+            <section class="step active" id="step1">
+                <div class="step-content">
+                    <h2>Passo 1: Identificação do Pedido</h2>
+                    <p class="step-description">Insira seu ID de pedido para começar a personalização</p>
+                    
+                    <div class="input-group">
+                        <label for="idPedido">ID do Pedido *</label>
+                        <input 
+                            type="text" 
+                            id="idPedido" 
+                            placeholder="Ex: 26011412345678 (14 dígitos)"
+                            maxlength="14"
+                            pattern="[0-9]{14}"
+                        >
+                        <small class="help-text">
+                            Formato: AAMMDD (data) + 8 dígitos sequenciais
+                        </small>
+                        <div id="erro-pedido" class="error-message"></div>
+                    </div>
+
+                    <div class="referencia-visual">
+                        <h3>Formato Esperado:</h3>
+                        <div class="formato-box">
+                            <p>
+                                <strong>AAMMDD</strong> = Data (Ex: 260114 para 14/01/26)<br>
+                                <strong>+ 8 dígitos</strong> = Sequência do pedido<br>
+                                <strong>Total: 14 dígitos</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="validarPasso1()">
+                        Continuar para Próximo Passo →
+                    </button>
+                </div>
+            </section>
+
+            <!-- PASSO 2: Upload do Logotipo -->
+            <section class="step" id="step2">
+                <div class="step-content">
+                    <h2>Passo 2: Upload do Logotipo</h2>
+                    <p class="step-description">Envie seu logotipo para personalizar a frente da sacola</p>
+                    
+                    <div class="referencia-container">
+                        <div class="referencia-visual">
+                            <h3>Área Nobre da Sacola (Frente):</h3>
+                            <div class="mockup-sacola">
+                                <div class="sacola-frente">
+                                    <div class="area-logo">
+                                        <p>📍 Seu Logotipo Aqui</p>
+                                        <p style="font-size: 12px; color: #999;">Área Recomendada</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="recomendacao">
+                                ✓ Tamanho recomendado: 500x500px (máximo)<br>
+                                ✓ Formatos: PNG, JPG, SVG, WebP<br>
+                                ✓ Resolução: 300 DPI para qualidade de impressão
+                            </p>
+                        </div>
+
+                        <div class="upload-section">
+                            <label for="logoUpload" class="upload-label">
+                                <div class="upload-box" id="uploadBox">
+                                    <div class="upload-icon">📤</div>
+                                    <p><strong>Clique para selecionar ou arraste seu logotipo</strong></p>
+                                    <small>PNG, JPG, SVG ou WebP</small>
+                                </div>
+                                <input 
+                                    type="file" 
+                                    id="logoUpload" 
+                                    accept=".png,.jpg,.jpeg,.svg,.webp"
+                                    style="display: none;"
+                                >
+                            </label>
+                            <div id="preview-logo" class="preview-section" style="display: none;">
+                                <h4>Preview do Logotipo:</h4>
+                                <img id="logoPreview" alt="Preview">
+                            </div>
+                            <div id="erro-logo" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button class="btn-secondary" onclick="voltarPasso(1)">← Voltar</button>
+                        <button class="btn-primary" onclick="validarPasso2()">
+                            Continuar para Próximo Passo →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PASSO 3: Dados de Contato -->
+            <section class="step" id="step3">
+                <div class="step-content">
+                    <h2>Passo 3: Dados de Contato</h2>
+                    <p class="step-description">Adicione suas informações de contato na sacola</p>
+                    
+                    <div class="referencia-container">
+                        <div class="referencia-visual">
+                            <h3>Área de Contato (Rodapé):</h3>
+                            <div class="mockup-sacola">
+                                <div class="sacola-contato">
+                                    <p>📍 Seus Dados Aqui</p>
+                                    <p style="font-size: 12px; color: #999;">WhatsApp e Instagram</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contato-section">
+                            <!-- Instagram -->
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="usar-instagram" onchange="toggleInstagram()">
+                                    <strong>📱 Adicionar Instagram?</strong>
+                                </label>
+                            </div>
+                            <div id="instagram-input" class="input-group" style="display: none;">
+                                <label for="instagram">Seu Instagram (com @)</label>
+                                <input 
+                                    type="text" 
+                                    id="instagram" 
+                                    placeholder="@seu_instagram"
+                                >
+                            </div>
+
+                            <!-- WhatsApp -->
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="usar-whatsapp" onchange="toggleWhatsApp()">
+                                    <strong>💬 Adicionar WhatsApp?</strong>
+                                </label>
+                            </div>
+                            <div id="whatsapp-input" class="input-group" style="display: none;">
+                                <label for="whatsapp">Seu WhatsApp</label>
+                                <input 
+                                    type="text" 
+                                    id="whatsapp" 
+                                    placeholder="(XX) 9XXXX-XXXX"
+                                    maxlength="14"
+                                >
+                                <small class="help-text">Formato: (XX) 9XXXX-XXXX</small>
+                            </div>
+
+                            <div id="erro-contato" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button class="btn-secondary" onclick="voltarPasso(2)">← Voltar</button>
+                        <button class="btn-primary" onclick="validarPasso3()">
+                            Continuar para Próximo Passo →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PASSO 4: Personalização Estrutural -->
+            <section class="step" id="step4">
+                <div class="step-content">
+                    <h2>Passo 4: Personalização Estrutural</h2>
+                    <p class="step-description">Escolha como sua sacola será personalizada</p>
+                    
+                    <div class="personalizacao-section">
+                        <!-- Escolha: Frase ou Logotipo -->
+                        <div class="config-group">
+                            <h3>Escolha do Destaque Principal:</h3>
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="frase-logo" value="logo" checked onchange="mostrarOpcaoLogoAlca()">
+                                    <strong>🎯 Logotipo</strong> (padrão)
+                                </label>
+                                <label>
+                                    <input type="radio" name="frase-logo" value="frase" onchange="mostrarOpcaoFrase()">
+                                    <strong>✍️ Frase Personalizada</strong>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Opção de Frase -->
+                        <div id="opcao-frase" class="config-group" style="display: none;">
+                            <label for="frase-input">Digite sua frase:</label>
+                            <input 
+                                type="text" 
+                                id="frase-input" 
+                                placeholder="Ex: Escolha a melhor qualidade!"
+                                maxlength="50"
+                            >
+                            <small class="help-text">Máximo de 50 caracteres</small>
+                        </div>
+
+                        <!-- Opções de Alça -->
+                        <div class="config-group">
+                            <h3>Opções de Alça:</h3>
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="opcoes-alca" value="padrão" checked>
+                                    <strong>Padrão</strong> - Sem personalização
+                                </label>
+                                <label>
+                                    <input type="radio" name="opcoes-alca" value="frase1">
+                                    <strong>"Qualidade Garantida"</strong>
+                                </label>
+                                <label>
+                                    <input type="radio" name="opcoes-alca" value="frase2">
+                                    <strong>"Sustentável e Resistente"</strong>
+                                </label>
+                                <label>
+                                    <input type="radio" name="opcoes-alca" value="frase3">
+                                    <strong>Frase Personalizada</strong>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Fundo da Sacola -->
+                        <div class="config-group">
+                            <h3>Informações de Fundo:</h3>
+                            <p class="info-box">
+                                ℹ️ A mensagem legal será automaticamente aplicada:<br>
+                                <em>"Embalagem produzida por Lografic - Soluções em Personalização"</em>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button class="btn-secondary" onclick="voltarPasso(3)">← Voltar</button>
+                        <button class="btn-primary" onclick="validarPasso4()">
+                            Visualizar Mockup Final →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PASSO 5: Revisão e Aprovação -->
+            <section class="step" id="step5">
+                <div class="step-content">
+                    <h2>Revisão Final - Mockup da Sua Sacola</h2>
+                    <p class="step-description">Visualize e aprove seu design antes da produção</p>
+                    
+                    <div class="mockup-container">
+                        <div class="mockup-wrapper">
+                            <img id="mockup-final" alt="Mockup da Sacola" class="mockup-image">
+                        </div>
+                        <div class="mockup-info">
+                            <h3>Simulação Realista:</h3>
+                            <ul>
+                                <li>✓ Textura de papel offset fosco</li>
+                                <li>✓ Simulação de impressão digital</li>
+                                <li>✓ Comportamento realista de cores</li>
+                                <li>✓ Proporção 1:1 da sacola</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="approval-info" id="approval-info" style="display: none;">
+                        <div class="info-box success">
+                            <strong>⏱️ Prazo de Postagem:</strong><br>
+                            Sua sacola será postada em até 4 dias úteis após aprovação.
+                        </div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button class="btn-secondary" onclick="voltarPasso(4)">← Voltar e Editar</button>
+                        <button class="btn-success" onclick="aprovarArte()">
+                            ✓ Aprovar Arte e Finalizar
+                        </button>
+                    </div>
+
+                    <div id="erro-final" class="error-message"></div>
+                </div>
+            </section>
+
+            <!-- PASSO 6: Confirmação -->
+            <section class="step" id="step6">
+                <div class="step-content confirmation-content">
+                    <div class="success-message">
+                        <h2>✅ Pedido Aprovado com Sucesso!</h2>
+                        <p class="pedido-id">ID: <strong id="pedido-id-final"></strong></p>
+                        
+                        <div class="info-box success">
+                            <h3>Próximos Passos:</h3>
+                            <ol>
+                                <li><strong>Email Confirmação:</strong> Você receberá um email com seu mockup aprovado</li>
+                                <li><strong>Processamento:</strong> Nossa equipe processará seu pedido em breve</li>
+                                <li><strong>Postagem:</strong> Sua sacola será postada em até 4 dias úteis</li>
+                                <li><strong>Rastreamento:</strong> Você receberá link de rastreamento por email</li>
+                            </ol>
+                        </div>
+
+                        <div class="download-section">
+                            <h3>Arquivos Gerados:</h3>
+                            <div class="download-buttons">
+                                <button class="btn-secondary" id="download-png" onclick="downloadArquivo('png')">
+                                    📥 Baixar PNG
+                                </button>
+                                <button class="btn-secondary" id="download-jpg" onclick="downloadArquivo('jpg')">
+                                    📥 Baixar JPEG
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="contact-info">
+                            <h3>Dúvidas?</h3>
+                            <p>Entre em contato conosco: <strong>suporte@lografic.com.br</strong></p>
+                        </div>
+
+                        <button class="btn-primary" onclick="novoSolicitacao()">
+                            Fazer Novo Pedido
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processando sua solicitação...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

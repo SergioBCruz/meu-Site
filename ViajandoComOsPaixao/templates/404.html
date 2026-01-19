@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro 404 - Página não encontrada</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .erro-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            text-align: center;
+        }
+        
+        .erro-numero {
+            font-size: 8rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .erro-mensagem {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin: 1rem 0;
+        }
+        
+        .erro-descricao {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 1rem auto 2rem;
+        }
+        
+        .erro-botoes {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">✈️</span>
+                <h1>Viajando com os Paixão</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/galeria" class="nav-link">Galeria</a>
+                <a href="/videos" class="nav-link">Vídeos</a>
+                <a href="/sobre" class="nav-link">Sobre</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="erro-container">
+            <h1 class="erro-numero">404</h1>
+            <h2 class="erro-mensagem">Página não encontrada</h2>
+            <p class="erro-descricao">
+                Desculpe! A página que você está procurando não existe ou foi movida.
+            </p>
+            
+            <div class="erro-botoes">
+                <a href="/" class="btn-primary">Voltar à Home</a>
+                <a href="/galeria" class="btn-secondary">Ver Galeria</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 3rem;">
+        <div class="container">
+            <p>&copy; 2024 Viajando com os Paixão. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
