@@ -1,313 +1,443 @@
 "use client";
 
+const benefits = [
+  {
+    title: "Diagnóstico guiado por IA",
+    description: "Identifico onde você perde leads e entrego correções rápidas de copy e UX.",
+  },
+  {
+    title: "Copy clara e proposta de valor",
+    description: "Headline, oferta e CTA alinhados ao problema real do seu visitante.",
+  },
+  {
+    title: "Estrutura validada para conversão",
+    description: "Seções na ordem certa: prova, oferta, benefícios, objeções e fechamento.",
+  },
+  {
+    title: "Velocidade e rastreio",
+    description: "Páginas leves, métricas verdes e eventos para medir conversão.",
+  },
+  {
+    title: "Entrega e ajustes rápidos",
+    description: "Setup em 24h e iterações semanais quando precisar otimizar ainda mais.",
+  },
+];
+
 const services = [
-  "Landing pages focadas em conversão",
-  "Sites institucionais modernos",
-  "Otimização de performance",
-  "Integração com WhatsApp e formulários",
-  "SEO básico para Google",
-];
-
-const differentiators = [
-  "⚡ Carregamento rápido",
-  "📱 Mobile-first",
-  "🎯 Estrutura pensada para vender",
-  "💻 Código limpo e escalável",
-  "🤝 Atendimento direto com o desenvolvedor",
-];
-
-const demos = [
   {
-    title: "Facas Artesanais de Alto Desempenho",
-    subtitle: "Corte preciso, design exclusivo e acabamento profissional",
-    cta: "Solicitar orçamento no WhatsApp",
-    price: "R$ 900 – R$ 2.500",
-    badge: "Valor percebido alto",
+    title: "Landing pages sob medida",
+    description: "Planejamento, copy e layout pensados para capturar lead todo dia.",
   },
   {
-    title: "Encontre Passagens Aéreas Mais Baratas em Minutos",
-    subtitle: "Atendimento rápido, seguro e personalizado",
-    cta: "Cotar passagem agora",
-    price: "R$ 600 – R$ 1.500",
-    badge: "Volume alto",
+    title: "Diagnóstico + ajustes",
+    description: "Análise completa com plano de correções e implementação expressa.",
   },
   {
-    title: "Soluções Profissionais para Seu Negócio",
-    subtitle: "Atendimento rápido, confiança e resultado",
-    cta: "Falar no WhatsApp",
-    price: "R$ 500 – R$ 1.200",
-    badge: "Fácil de vender",
+    title: "Otimização contínua",
+    description: "Ciclos mensais de testes, novas headlines e mensagens de follow-up.",
   },
 ];
 
-const stats = [
-  { label: "Plano de ganho real", value: "R$ 5.600/mês" },
-  { label: "Projetos / semana", value: "2" },
-  { label: "Prazos", value: "Landing pronta em poucos dias" },
+const steps = [
+  { title: "Envie sua landing", description: "Compartilhe o link e o objetivo da página." },
+  { title: "Receba o diagnóstico", description: "Aponto os pontos de abandono e entrego melhorias práticas." },
+  { title: "Converta mais", description: "Aplicamos ajustes de copy, CTA e estrutura para destravar resultados." },
+];
+
+const offers = [
+  {
+    name: "Setup de Otimização",
+    price: "R$147 / US$29",
+    description: "Otimização completa da copy e estrutura da sua landing page com foco em conversão.",
+    items: [
+      "Headline e subheadline",
+      "Copy completa da página",
+      "Estrutura otimizada",
+      "CTA e oferta",
+      "Entrega em até 24h",
+    ],
+  },
+  {
+    name: "Otimização Contínua (Mensal)",
+    price: "R$147/mês",
+    description: "Acompanhamento contínuo para melhorar conversão e resultados.",
+    items: [
+      "Ajustes mensais de copy",
+      "Testes de headline",
+      "Copy para campanhas",
+      "Mensagens de follow-up",
+    ],
+  },
+];
+
+const authority = ["Foco em conversão", "Processo validado", "Entrega rápida", "Orientado a resultados"];
+
+const testimonials = [
+  {
+    name: "Camila, SaaS B2B",
+    quote: "Depois da landing page, nosso volume de leads dobrou em menos de 30 dias.",
+    metric: "+100% leads",
+  },
+  {
+    name: "Bruno, Educação",
+    quote: "O site ficou rápido, profissional e começou a gerar contatos qualificados.",
+    metric: "Qualidade ↑",
+  },
+  {
+    name: "Marina, Serviços",
+    quote: "Finalmente uma página que converte de verdade.",
+    metric: "Conversão ↑",
+  },
 ];
 
 export default function Home() {
-  const whatsappLink = "https://wa.me/5551997799212";
+  const whatsappLink =
+    "https://wa.me/5551997799212?text=Ol%C3%A1%2C%20quero%20uma%20landing%20page%20focada%20em%20convers%C3%A3o.";
 
   return (
     <div className="min-h-screen text-foreground">
-      <header className="sticky top-0 z-20 backdrop-blur bg-white/80 border-b border-black/5">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <div className="text-lg font-semibold text-primary">Sergi Landing Studio</div>
-          <nav className="hidden items-center gap-6 text-sm font-medium text-muted sm:flex">
-            <a href="#servicos" className="hover:text-primary">
-              Serviços
-            </a>
-            <a href="#projetos" className="hover:text-primary">
-              Projetos
-            </a>
-            <a href="#sobre" className="hover:text-primary">
-              Sobre
-            </a>
-            <a href="#contato" className="hover:text-primary">
-              Contato
-            </a>
-          </nav>
-          <a
-            href="#contato"
-            className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-          >
-            Quero mais clientes
-          </a>
-        </div>
-      </header>
+      <main className="flex flex-col gap-16 pb-20">
+        <section className="hero hero-dark">
+          <div className="container mx-auto px-4">
+            <div className="hero-shell">
+              <h1 className="hero-brand fade-in delay-1">Sérgio Landing Studio</h1>
+              <h2 className="hero-title fade-in delay-2">
+                Landing pages projetadas para gerar leads todos os dias — não só ficar bonitas.
+              </h2>
+              <p className="hero-lead fade-in delay-3">
+                Copy estratégica, estrutura validada e otimização com IA para transformar visitantes em clientes.
+              </p>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                <a className="btn-hero btn-lg fw-semibold" href="/diagnostico">
+                  Receber diagnóstico gratuito da minha landing
+                </a>
+                <a
+                  className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
+                  href="#como-funciona"
+                >
+                  Ver como funciona
+                </a>
+              </div>
+              <p className="hero-meta mt-3 slide-up delay-4">Análise prática • Sem compromisso • Entrega rápida</p>
+              <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs text-muted">
+                {authority.map((item) => (
+                  <span key={item} className="rounded-full border border-white/15 px-3 py-2 text-muted">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <main className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pb-20 pt-12">
-        <section className="grid items-center gap-10 md:grid-cols-2">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
-              Landing pages que vendem
-            </div>
-            <div className="space-y-3">
-              <h1 className="text-4xl font-bold leading-tight text-primary sm:text-5xl">
-                Landing Pages que Transformam Visitas em Clientes
-              </h1>
-              <p className="text-lg text-muted">
-                Crio landing pages modernas, rápidas e responsivas usando HTML, CSS, React e Bootstrap.
-              </p>
-              <p className="text-base text-primary font-semibold">
-                Especialista em páginas focadas em conversão para empresas que querem mais clientes.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <a
-                href="#contato"
-                className="rounded-full bg-accent px-6 py-3 text-base font-semibold text-primary shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-              >
-                Quero mais clientes agora
-              </a>
-              <a
-                href="#projetos"
-                className="rounded-full border border-primary/20 px-6 py-3 text-base font-semibold text-primary transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
-              >
-                Ver demos reais
-              </a>
-            </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {stats.map((item) => (
-                <div key={item.label} className="glass rounded-xl p-4">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-muted">
-                    {item.label}
+        <section id="como-funciona" className="mx-auto flex max-w-6xl flex-col gap-8 px-4">
+          <div className="glass rounded-2xl p-6 shadow-lg">
+            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Como funciona</p>
+            <h2 className="text-3xl font-bold text-primary">Diagnóstico gratuito em 3 passos</h2>
+            <div className="mt-4 grid gap-4 md:grid-cols-3">
+              {steps.map((step, index) => (
+                <div key={step.title} className="glass rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-semibold text-accent">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <h3 className="text-base font-semibold text-primary">{step.title}</h3>
+                      <p className="text-sm text-muted">{step.description}</p>
+                    </div>
                   </div>
-                  <div className="mt-1 text-lg font-bold text-primary">{item.value}</div>
                 </div>
               ))}
             </div>
-          </div>
-          <div className="glass relative overflow-hidden rounded-2xl p-8 shadow-lg">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/10 to-transparent" />
-            <div className="relative space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white font-bold">
-                  LP
-                </span>
-                <div>
-                  <div className="text-sm font-semibold text-primary">Blueprint de conversão</div>
-                  <div className="text-sm text-muted">Landing sob medida para seu negócio</div>
-                </div>
-              </div>
-              <ul className="space-y-2 text-sm text-muted">
-                <li>• Estrutura AIDA + provas + CTA forte</li>
-                <li>• Performance otimizada e mobile-first</li>
-                <li>• Integração com WhatsApp e formulários</li>
-              </ul>
-              <div className="rounded-xl bg-primary text-white p-4">
-                <div className="text-sm font-semibold">Script de vendas pronto</div>
-                <p className="text-sm opacity-90">
-                  Primeira mensagem, follow-up, preço de entrada e fechamento. Copiar e colar todo dia.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="servicos" className="space-y-6">
-          <div className="space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Serviços</p>
-            <h2 className="text-3xl font-bold text-primary">Soluções para vender mais</h2>
-            <p className="text-base text-muted">
-              Sou desenvolvedor focado em landing pages de alta performance. Cada projeto é pensado para
-              converter visitas em contatos reais com design moderno, código limpo e carregamento rápido.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {services.map((service) => (
-              <div key={service} className="glass flex items-start gap-3 rounded-xl p-4">
-                <span className="mt-1 h-2.5 w-2.5 rounded-full bg-accent" />
-                <div>
-                  <div className="text-base font-semibold text-primary">{service}</div>
-                  <p className="text-sm text-muted">Entrega clara, rápida e focada em conversão.</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section id="projetos" className="space-y-6">
-          <div className="space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Projetos</p>
-            <h2 className="text-3xl font-bold text-primary">3 demos reais para mostrar</h2>
-            <p className="text-base text-muted">
-              Use estes exemplos como print, link e argumento de venda. Templates prontos para adaptar.
-            </p>
-          </div>
-          <div className="grid gap-6 lg:grid-cols-3">
-            {demos.map((demo) => (
-              <div key={demo.title} className="glass flex h-full flex-col rounded-2xl p-6 shadow-sm">
-                <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                    {demo.badge}
-                  </span>
-                  <span className="text-xs font-semibold text-muted">{demo.price}</span>
-                </div>
-                <h3 className="mt-4 text-xl font-bold text-primary">{demo.title}</h3>
-                <p className="mt-2 flex-1 text-sm text-muted">{demo.subtitle}</p>
-                <a
-                  href={whatsappLink}
-                  className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:shadow-lg"
-                >
-                  {demo.cta}
-                </a>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="grid gap-6 rounded-2xl bg-primary px-6 py-8 text-white md:grid-cols-3">
-          {differentiators.map((item) => (
-            <div key={item} className="flex items-start gap-3">
-              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-accent" />
-              <p className="text-sm font-semibold leading-tight">{item}</p>
-            </div>
-          ))}
-        </section>
-
-        <section id="sobre" className="grid gap-8 md:grid-cols-2">
-          <div className="space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Sobre</p>
-            <h2 className="text-3xl font-bold text-primary">Quem desenvolve</h2>
-            <p className="text-base text-muted leading-relaxed">
-              Sou desenvolvedor focado em criação de landing pages de alta performance. Meu trabalho é
-              transformar visitantes em contatos reais usando design moderno, código limpo e estruturas
-              pensadas para conversão. Cada projeto é desenvolvido para carregar rápido, funcionar
-              perfeitamente no celular e gerar resultados para o negócio.
-            </p>
-          </div>
-          <div className="glass space-y-4 rounded-2xl p-6">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-primary font-bold">
-                1:1
-              </span>
-              <div>
-                <div className="text-sm font-semibold text-primary">Atendimento direto</div>
-                <div className="text-sm text-muted">Sem camada intermediária: você fala comigo.</div>
-              </div>
-            </div>
-            <div className="rounded-xl bg-primary/5 p-4 text-sm text-muted">
-              <p>
-                Script diário de vendas pronto: primeira mensagem, follow-up, resposta de preço e
-                fechamento. Basta copiar e colar para prospectar clientes todos os dias.
-              </p>
-            </div>
-            <ul className="space-y-2 text-sm text-muted">
-              <li>• Hospedagem recomendada: React em Vercel, HTML em Netlify (grátis para começar)</li>
-              <li>• Domínios: seunome.dev, seunomeweb.com, seunegocio.digital</li>
-              <li>• Performance, mobile-first, SEO básico incluídos</li>
-            </ul>
-          </div>
-        </section>
-
-        <section id="contato" className="grid gap-8 md:grid-cols-2">
-          <div className="space-y-4">
-            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Contato</p>
-            <h2 className="text-3xl font-bold text-primary">Fale agora</h2>
-            <p className="text-base text-muted">
-              Respondo rápido com um plano claro, prazo e valor justo. Se preferir, chame direto no WhatsApp.
-            </p>
-            <div className="glass rounded-2xl p-5">
-              <div className="text-sm font-semibold text-primary">WhatsApp</div>
-              <p className="text-sm text-muted">Atendimento rápido e direto com o desenvolvedor.</p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a className="btn-hero btn-lg fw-semibold" href="/diagnostico">
+                Quero meu diagnóstico gratuito
+              </a>
               <a
+                className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
                 href={whatsappLink}
-                className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:shadow-lg"
+                target="_blank"
+                rel="noopener"
               >
-                Abrir WhatsApp
+                Falar no WhatsApp
               </a>
             </div>
-            <div className="glass rounded-2xl p-5 text-sm text-muted">
-              <div className="text-sm font-semibold text-primary">Script rápido</div>
-              <p>
-                "Olá! Analisei seu negócio e percebi que uma landing page simples pode gerar mais contatos
-                para você. Posso te mostrar um exemplo?"
-              </p>
-            </div>
-          </div>
-          <div className="glass rounded-2xl p-6">
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-              <div>
-                <label className="text-sm font-semibold text-primary">Nome</label>
-                <input
-                  type="text"
-                  required
-                  className="mt-2 w-full rounded-lg border border-black/5 bg-white px-3 py-3 text-sm text-primary shadow-sm outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
-                  placeholder="Seu nome"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-semibold text-primary">Email</label>
-                <input
-                  type="email"
-                  required
-                  className="mt-2 w-full rounded-lg border border-black/5 bg-white px-3 py-3 text-sm text-primary shadow-sm outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
-                  placeholder="voce@email.com"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-semibold text-primary">Objetivo da página</label>
-                <textarea
-                  required
-                  rows={4}
-                  className="mt-2 w-full rounded-lg border border-black/5 bg-white px-3 py-3 text-sm text-primary shadow-sm outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
-                  placeholder="Ex.: captar leads para serviço local, lançar um produto, validar oferta"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-              >
-                Enviar briefing rápido
-              </button>
-              <p className="text-xs text-muted">
-                Retorno em poucas horas com proposta, prazo e próximos passos.
-              </p>
-            </form>
           </div>
         </section>
+
+        <section className="mx-auto flex max-w-6xl flex-col gap-16 px-4">
+          <div className="space-y-4 text-center">
+            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Prova social</p>
+            <h2 className="text-3xl font-bold text-primary">Resultados que geram confiança</h2>
+            <p className="text-base text-muted">Clientes reais validando velocidade, clareza e conversão.</p>
+          </div>
+          <div className="grid gap-6 rounded-2xl border border-white/10 bg-white/5 px-6 py-6 shadow-lg md:grid-cols-3">
+            {testimonials.map((item) => (
+              <div key={item.name} className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-muted">Prova social</span>
+                  <span className="rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent">
+                    {item.metric}
+                  </span>
+                </div>
+                <p className="text-sm text-primary">“{item.quote}”</p>
+                <p className="text-xs text-muted">{item.name}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="glass flex flex-col items-center gap-3 rounded-2xl px-6 py-7 text-center shadow-lg">
+            <h3 className="text-2xl font-bold text-primary">Pronto para ter mais leads?</h3>
+            <p className="text-sm text-muted">Reposicionamento premium, copy direta e performance rápida para conversão.</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <a className="btn-hero btn-lg fw-semibold" href="/diagnostico">
+                Receber diagnóstico gratuito da minha landing
+              </a>
+              <a
+                className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener"
+              >
+                Falar no WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <section className="space-y-6" id="beneficios">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-wide text-muted">Benefícios</p>
+              <h2 className="text-3xl font-bold text-primary">Construído para converter</h2>
+              <p className="text-base text-muted">
+                Estratégia, copy e performance alinhadas para transformar visitas em oportunidades reais.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {benefits.map((benefit) => (
+                <div key={benefit.title} className="glass rounded-xl p-5 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="mt-1 h-2.5 w-2.5 rounded-full bg-accent" />
+                    <div>
+                      <div className="text-base font-semibold text-primary">{benefit.title}</div>
+                      <p className="text-sm text-muted">{benefit.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <a className="btn-hero btn-lg fw-semibold" href="/diagnostico">
+                Quero otimizar minha landing
+              </a>
+              <a
+                className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener"
+              >
+                Fale comigo no WhatsApp
+              </a>
+            </div>
+          </section>
+
+          <section id="servicos" className="space-y-6">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-wide text-muted">Serviços</p>
+              <h2 className="text-3xl font-bold text-primary">Para cada etapa da sua oferta</h2>
+              <p className="text-base text-muted">
+                Do zero ao ajuste fino: lançamos rápido e otimizamos continuamente para elevar conversão.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {services.map((service) => (
+                <div
+                  key={service.title}
+                  className="glass group flex h-full flex-col justify-between rounded-xl p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold text-primary">{service.title}</h3>
+                    <p className="text-sm text-muted">{service.description}</p>
+                  </div>
+                  <div className="mt-4 text-xs font-semibold uppercase tracking-wide text-accent opacity-0 transition group-hover:opacity-100">
+                    Pronto para lançar
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <a className="btn-hero btn-lg fw-semibold" href={whatsappLink} target="_blank" rel="noopener">
+                Falar sobre seu projeto
+              </a>
+              <a
+                className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener"
+              >
+                WhatsApp imediato
+              </a>
+            </div>
+          </section>
+
+          <section className="glass flex flex-col items-center gap-4 rounded-2xl px-6 py-8 text-center shadow-lg">
+            <h3 className="text-2xl font-bold text-primary">Pronto para destravar resultados?</h3>
+            <p className="text-muted text-sm max-w-2xl">
+              Vamos criar uma landing page que gera leads qualificados e transmite confiança desde o primeiro scroll.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <a
+                className="btn-hero btn-lg fw-semibold"
+                href="/diagnostico"
+              >
+                Receber diagnóstico gratuito
+              </a>
+              <a
+                className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener"
+              >
+                Falar no WhatsApp
+              </a>
+            </div>
+          </section>
+
+          <section className="space-y-4" id="argumento">
+            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Por que escolher</p>
+            <div className="glass space-y-3 rounded-2xl p-6 shadow-lg">
+              <h2 className="text-3xl font-bold text-primary">Por que escolher o Sérgio Landing Studio?</h2>
+              <p className="text-base text-muted">
+                Não criamos apenas páginas bonitas. Criamos páginas com estratégia, pensadas para gerar leads,
+                conversão e crescimento real para o seu negócio.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a className="btn-hero btn-lg fw-semibold" href={whatsappLink} target="_blank" rel="noopener">
+                  Pronto para gerar clientes
+                </a>
+                <a
+                  className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Falar no WhatsApp
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <section className="space-y-4" id="planos">
+            <p className="text-sm font-semibold uppercase tracking-wide text-muted">Planos</p>
+            <h2 className="text-3xl font-bold text-primary">Escolha como quer otimizar</h2>
+            <p className="text-base text-muted">
+              Duas opções diretas: setup rápido para corrigir agora ou acompanhamento mensal para manter a conversão alta.
+            </p>
+            <div className="grid gap-4 md:grid-cols-2">
+              {offers.map((plan) => (
+                <div
+                  key={plan.name}
+                  className="glass h-full rounded-2xl border border-white/10 p-6 shadow-sm"
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-primary">{plan.name}</h3>
+                    <span className="text-xs font-semibold uppercase tracking-wide text-accent">Foco em conversão</span>
+                  </div>
+                  <p className="mt-2 text-sm text-muted">{plan.price}</p>
+                  <p className="mt-3 text-sm text-muted">{plan.description}</p>
+                  <ul className="mt-4 space-y-2 text-sm text-muted">
+                    {plan.items.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                  <a
+                    className="mt-5 inline-flex justify-center rounded-full border border-white/25 px-4 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-white/50 hover:shadow-lg"
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Quero otimizar minha landing
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section id="contato" className="grid gap-8 md:grid-cols-2">
+            <div className="space-y-4">
+              <p className="text-sm font-semibold uppercase tracking-wide text-muted">Contato</p>
+              <h2 className="text-3xl font-bold text-primary">Fale agora</h2>
+              <p className="text-base text-muted">
+                Retorno rápido com um plano claro, prazo e valor justo. Se preferir, chame direto no WhatsApp.
+              </p>
+              <div className="glass rounded-2xl p-5">
+                <div className="text-sm font-semibold text-primary">WhatsApp</div>
+                <p className="text-sm text-muted">Atendimento direto com o desenvolvedor.</p>
+                <a
+                  href={whatsappLink}
+                  className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  Abrir WhatsApp
+                </a>
+              </div>
+            </div>
+            <div className="glass rounded-2xl p-6">
+              <form
+                className="space-y-4"
+                action="https://formspree.io/f/mvgzveve"
+                method="POST"
+              >
+                <div>
+                  <label className="text-sm font-semibold text-primary">Nome</label>
+                  <input
+                    type="text"
+                    name="nome"
+                    required
+                    className="mt-2 w-full rounded-lg border border-black/5 bg-white px-3 py-3 text-sm text-primary shadow-sm outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+                    placeholder="Seu nome"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-primary">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    className="mt-2 w-full rounded-lg border border-black/5 bg-white px-3 py-3 text-sm text-primary shadow-sm outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+                    placeholder="voce@email.com"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-primary">Mensagem</label>
+                  <textarea
+                    name="mensagem"
+                    required
+                    rows={4}
+                    className="mt-2 w-full rounded-lg border border-black/5 bg-white px-3 py-3 text-sm text-primary shadow-sm outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+                    placeholder="Contexto do projeto, meta e prazo desejado"
+                  />
+                </div>
+                <input type="hidden" name="_subject" value="Novo lead - Sérgio Landing Studio" />
+                <button
+                  type="submit"
+                  className="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  Enviar briefing rápido
+                </button>
+                <p className="text-xs text-muted">Retorno em poucas horas com proposta e próximos passos.</p>
+              </form>
+            </div>
+          </section>
+        </section>
+
+        <a
+          href={whatsappLink}
+          className="floating-whatsapp"
+          target="_blank"
+          rel="noopener"
+          aria-label="Abrir WhatsApp"
+        >
+          WhatsApp
+        </a>
       </main>
     </div>
   );
